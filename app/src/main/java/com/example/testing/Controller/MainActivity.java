@@ -40,8 +40,6 @@ public class MainActivity extends AppCompatActivity {
                 replaceFragment(new SearchFragment());
             } else if (item.getItemId() == R.id.mWishList) {
                 replaceFragment(new WishListFragment());
-            } else if (item.getItemId() == R.id.mProfile) {
-                replaceFragment(new ProfileFragment());
             }
             return true;
         });
