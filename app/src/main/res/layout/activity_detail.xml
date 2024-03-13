@@ -37,8 +37,8 @@
 
     <TextView
         android:id="@+id/tv_title_detail"
-        android:layout_width="242dp"
-        android:layout_height="84dp"
+        android:layout_width="240dp"
+        android:layout_height="59dp"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -46,7 +46,16 @@
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/img_book_detail"
-        app:layout_constraintVertical_bias="0.401" />
+        app:layout_constraintVertical_bias="0.358" />
+
+    <Button
+        android:id="@+id/btn_add_to_wishlist"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add to Wishlist"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_title_detail" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcv_book_chapter"
@@ -54,12 +63,12 @@
         android:layout_height="254dp"
         android:layout_below="@id/tv_title_detail"
         android:layout_gravity="center"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="80dp"
+        android:layout_marginBottom="70dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.473"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_title_detail"
-        app:layout_constraintVertical_bias="0.333" />
+        app:layout_constraintTop_toBottomOf="@+id/btn_add_to_wishlist"
+        app:layout_constraintVertical_bias="1.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

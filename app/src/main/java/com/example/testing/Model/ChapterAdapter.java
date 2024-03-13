@@ -23,6 +23,7 @@ public class ChapterAdapter extends RecyclerView.Adapter<ChapterAdapter.ChapterV
     }
 
     public interface OnChapterClickListener {
+
         void onChapterClick(Chapter chapter);
     }
 
