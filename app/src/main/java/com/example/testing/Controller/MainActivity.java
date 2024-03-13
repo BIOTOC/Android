@@ -29,7 +29,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void bindingView() {
-
         setSupportActionBar(binding.toolbar);
     }
 

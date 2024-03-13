@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+    android:layout_width="300dp"
     android:layout_height="wrap_content"
     android:layout_marginEnd="10dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -13,8 +13,8 @@
 
         <ImageView
             android:id="@+id/img_book"
-            android:layout_width="30dp"
-            android:layout_height="204dp"
+            android:layout_width="68dp"
+            android:layout_height="220dp"
             android:layout_weight="1"
             android:scaleType="centerCrop"
             android:src="@drawable/book1" />
@@ -32,14 +32,15 @@
                 android:padding="6dp"
                 android:text="Book 1"
                 android:textSize="16sp"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
+
             <TextView
                 android:id="@+id/tv_chapter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="6dp"
-                android:textSize="12sp"
-                android:text="Number of Chapters: "/>
+                android:text="Number of Chapters: "
+                android:textSize="12sp" />
 
         </LinearLayout>
     </LinearLayout>

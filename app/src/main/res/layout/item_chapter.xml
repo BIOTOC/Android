@@ -9,12 +9,13 @@
         android:id="@+id/chapter_text_view"
         android:layout_width="320dp"
         android:layout_height="wrap_content"
+        android:background="@drawable/item_divider"
+        android:gravity="center_horizontal"
         android:padding="20dp"
         android:textSize="20sp"
-        android:gravity="center_horizontal"
-        android:background="@drawable/item_divider"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

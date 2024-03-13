@@ -30,6 +30,7 @@ public class DetailActivity extends AppCompatActivity implements ChapterAdapter.
     private ImageView imageViewBook;
     private TextView textViewTitle;
     private RecyclerView recyclerView;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,24 +38,22 @@ public class DetailActivity extends AppCompatActivity implements ChapterAdapter.
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_detail);
 
-        bindViews();
-
-        Toolbar toolbar = findViewById(R.id.detail_toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        bindActions();
+        bindingView();
+        bindingAction();
 
         handleIntent(getIntent());
     }
 
-    private void bindViews() {
+    private void bindingView() {
         imageViewBook = findViewById(R.id.img_book_detail);
         textViewTitle = findViewById(R.id.tv_title_detail);
         recyclerView = findViewById(R.id.rcv_book_chapter);
+        toolbar = findViewById(R.id.detail_toolbar);
     }
 
-    private void bindActions() {
+    private void bindingAction() {
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     private void handleIntent(Intent intent) {
