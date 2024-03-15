@@ -39,7 +39,14 @@ public class MainActivity extends AppCompatActivity {
             } else if (item.getItemId() == R.id.mSearch) {
                 replaceFragment(new SearchFragment());
             } else if (item.getItemId() == R.id.mWishList) {
-                replaceFragment(new WishListFragment());
+                Bundle bundle = new Bundle();
+                int bookId = getIntent().getIntExtra("bookId", -1);
+                bundle.putInt("bookId", bookId);
+
+                WishListFragment wishListFragment = new WishListFragment();
+                wishListFragment.setArguments(bundle);
+
+                replaceFragment(wishListFragment);
             }
             return true;
         });

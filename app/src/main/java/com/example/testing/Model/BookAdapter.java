@@ -20,6 +20,16 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
 
     private List<Book> mBooks;
 
+    public void addBook(Book book) {
+        mBooks.add(book);
+        notifyDataSetChanged();
+    }
+
+    public void removeBook(Book book) {
+        mBooks.remove(book);
+        notifyDataSetChanged();
+    }
+
     public BookAdapter() {
     }
 
@@ -65,7 +75,6 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
                 }
             }
         });
-//        holder.imgBook.setImageResource(book.getResourceId());
         String base64Image = book.getImageBase64();
         byte[] decodedString = Base64.decode(base64Image, Base64.DEFAULT);
         Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
