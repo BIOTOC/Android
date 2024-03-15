@@ -1,4 +1,4 @@
-package com.example.testing.Controller;
+package com.example.testing.Controllers;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,7 +10,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import com.example.testing.Model.Chapter;
+import com.example.testing.Models.Chapter;
 import com.example.testing.R;
 
 public class ChapterDetailActivity extends AppCompatActivity {

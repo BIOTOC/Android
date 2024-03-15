@@ -1,4 +1,4 @@
-package com.example.testing.Model;
+package com.example.testing.Models;
 
 public class Chapter {
     private int chapterId;

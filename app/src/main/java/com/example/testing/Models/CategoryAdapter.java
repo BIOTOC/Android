@@ -1,4 +1,4 @@
-package com.example.testing.Model;
+package com.example.testing.Models;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -24,7 +24,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
     // Constructor và các phương thức khác
 
     public interface OnBookClickListener {
-        void onBookClick(Book book);
+        void onBookClick(Story story);
     }
 
     public void setOnBookClickListener(OnBookClickListener listener) {
@@ -64,9 +64,9 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
 
         bookAdapter.setOnBookClickListener(new BookAdapter.OnBookClickListener() {
             @Override
-            public void onBookClick(Book book) {
+            public void onBookClick(Story story) {
                 if (onBookClickListener != null) {
-                    onBookClickListener.onBookClick(book);
+                    onBookClickListener.onBookClick(story);
                 }
             }
         });
