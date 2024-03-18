@@ -62,6 +62,13 @@ public class HomeFragment extends Fragment {
         setUpRecyclerView();
         setUpData();
         //categoryAdapter.setData(getListCategory());
+        categoryAdapter.setOnBookClickListener(new CategoryAdapter.OnBookClickListener() {
+            @Override
+            public void onBookClick(Story book) {
+                // Handling book click event
+                onBookItemClick(book);
+            }
+        });
     }
 
     private void setUpRecyclerView() {
