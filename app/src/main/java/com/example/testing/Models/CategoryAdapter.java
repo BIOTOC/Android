@@ -20,6 +20,10 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
 
     private OnBookClickListener onBookClickListener;
 
+    public void setCategories(List<Category> listCategory) {
+
+    }
+
 
     // Constructor và các phương thức khác
 
