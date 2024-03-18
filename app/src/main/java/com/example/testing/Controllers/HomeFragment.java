@@ -93,7 +93,6 @@ public class HomeFragment extends Fragment {
                             Log.d("API_Response", "Message: " + result.getData());
                             Log.d("API_Response", "Message: " + response.body());
 
-
                             List<Story> stories = result.getData();
 
                             List<Category> list = new ArrayList<>();
@@ -119,22 +118,14 @@ public class HomeFragment extends Fragment {
                     }
 
                 }
-
                 @Override
                 public void onFailure(Call<BaseResult<List<Story>>> call, Throwable t) {
                     Log.e("API_Response", "API call failed: " + t.getMessage(), t);
                 }
             });
-
-
-
         }catch (Exception e){
             Toast.makeText(mMainActivity, e.getMessage(), Toast.LENGTH_SHORT).show();
-
-
         }
-
-
     }
 
 

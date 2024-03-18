@@ -43,10 +43,10 @@ public class MainActivity extends AppCompatActivity {
                 int bookId = getIntent().getIntExtra("bookId", -1);
                 bundle.putInt("bookId", bookId);
 
-                WishListFragment wishListFragment = new WishListFragment();
-                wishListFragment.setArguments(bundle);
-
-                replaceFragment(wishListFragment);
+//                WishListFragment wishListFragment = new WishListFragment();
+//                wishListFragment.setArguments(bundle);
+//
+//                replaceFragment(wishListFragment);
             }
             return true;
         });
