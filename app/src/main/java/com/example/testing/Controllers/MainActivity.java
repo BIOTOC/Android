@@ -1,4 +1,4 @@
-package com.example.testing.Controller;
+package com.example.testing.Controllers;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;

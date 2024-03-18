@@ -1,4 +1,4 @@
-package com.example.testing.Controller;
+package com.example.testing.Controllers;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -23,9 +23,10 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.testing.Model.Book;
-import com.example.testing.Model.Chapter;
-import com.example.testing.Model.ChapterAdapter;
+import com.example.testing.Models.Book;
+import com.example.testing.Models.Chapter;
+import com.example.testing.Models.ChapterAdapter;
+import com.example.testing.Models.Story;
 import com.example.testing.R;
 
 import java.util.ArrayList;
@@ -66,6 +67,7 @@ public class DetailActivity extends AppCompatActivity implements ChapterAdapter.
         btnAddToWishlist.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+<<<<<<< HEAD:app/src/main/java/com/example/testing/Controller/DetailActivity.java
                 Intent intent = getIntent();
                 int bookId = intent.getIntExtra("bookId", -1);
 
@@ -74,6 +76,14 @@ public class DetailActivity extends AppCompatActivity implements ChapterAdapter.
                 wishlistIntent.putExtra("bookId", bookId);
 
                 startActivity(wishlistIntent);
+=======
+                Story story = getIntent().getParcelableExtra("story");
+
+                WishListFragment wishListFragment = (WishListFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_wishlist);
+                if (wishListFragment != null) {
+                    wishListFragment.addToWishlist(story);
+                }
+>>>>>>> 3e0c01f50e0e25ac666dbdfa1d9e283b9d8d6ceb:app/src/main/java/com/example/testing/Controllers/DetailActivity.java
             }
         });
 

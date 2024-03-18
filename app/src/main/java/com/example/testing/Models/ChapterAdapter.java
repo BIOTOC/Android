@@ -1,4 +1,4 @@
-package com.example.testing.Model;
+package com.example.testing.Models;
 
 import android.view.LayoutInflater;
 import android.view.View;

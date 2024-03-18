@@ -1,4 +1,4 @@
-package com.example.testing.Model;
+package com.example.testing.Models;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -18,7 +18,7 @@ import java.util.List;
 
 public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder>{
 
-    private List<Book> mBooks;
+    private List<Story> mStories;
 
     public void addBook(Book book) {
         mBooks.add(book);
@@ -33,12 +33,12 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
     public BookAdapter() {
     }
 
-    public BookAdapter(List<Book> mBooks) {
-        this.mBooks = mBooks;
+    public BookAdapter(List<Story> mStories) {
+        this.mStories = mStories;
     }
 
     public interface OnBookClickListener {
-        void onBookClick(Book book);
+        void onBookClick(Story story);
     }
 
     private OnBookClickListener onBookClickListener;
@@ -48,8 +48,8 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
     }
 
 
-    public void setData(List<Book> list){
-        this.mBooks = list;
+    public void setData(List<Story> list){
+        this.mStories = list;
         notifyDataSetChanged();
     }
 
@@ -62,8 +62,8 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull BookViewHolder holder, int position) {
-        Book book = mBooks.get(position);
-        if(book == null){
+        Story story = mStories.get(position);
+        if(story == null){
             return;
         }
 
@@ -71,23 +71,28 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
             @Override
             public void onClick(View v) {
                 if (onBookClickListener != null) {
-                    onBookClickListener.onBookClick(book);
+                    onBookClickListener.onBookClick(story);
                 }
             }
         });
+<<<<<<< HEAD:app/src/main/java/com/example/testing/Model/BookAdapter.java
         String base64Image = book.getImageBase64();
+=======
+//        holder.imgBook.setImageResource(book.getResourceId());
+        String base64Image = story.getImage();
+>>>>>>> 3e0c01f50e0e25ac666dbdfa1d9e283b9d8d6ceb:app/src/main/java/com/example/testing/Models/BookAdapter.java
         byte[] decodedString = Base64.decode(base64Image, Base64.DEFAULT);
         Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
 
         holder.imgBook.setImageBitmap(decodedByte);
-        holder.tvTitle.setText(book.getTitle());
-        holder.tvChapter.setText("Number of Chapters: " + book.getNumberOfChapters());
+        holder.tvTitle.setText(story.getName());
+        holder.tvChapter.setText("Number of Chapters: " + story.getNumberChapter());
     }
 
     @Override
     public int getItemCount() {
-        if(mBooks != null){
-            return mBooks.size();
+        if(mStories != null){
+            return mStories.size();
         }
         return 0;
     }

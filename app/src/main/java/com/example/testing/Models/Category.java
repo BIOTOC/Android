@@ -1,17 +1,17 @@
-package com.example.testing.Model;
+package com.example.testing.Models;
 
 import java.util.List;
 
 public class Category {
     private String nameCategory;
-    private List<Book> books;
+    private List<Story> stories;
 
     public Category() {
     }
 
-    public Category(String nameCategory, List<Book> books) {
+    public Category(String nameCategory, List<Story> stories) {
         this.nameCategory = nameCategory;
-        this.books = books;
+        this.stories = stories;
     }
 
     public String getNameCategory() {
@@ -22,11 +22,11 @@ public class Category {
         this.nameCategory = nameCategory;
     }
 
-    public List<Book> getBooks() {
-        return books;
+    public List<Story> getBooks() {
+        return stories;
     }
 
-    public void setBooks(List<Book> books) {
-        this.books = books;
+    public void setBooks(List<Story> stories) {
+        this.stories = stories;
     }
 }
