@@ -1,6 +1,6 @@
 package com.example.testing.Services.Story;
 
-import com.example.testing.Model.BaseResult;
+import com.example.testing.Models.BaseResult;
 import com.example.testing.Models.Story;
 
 import java.util.List;

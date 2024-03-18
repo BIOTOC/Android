@@ -6,12 +6,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.testing.Model.BaseResult;
+import com.example.testing.Models.BaseResult;
 import com.example.testing.Models.Category;
 import com.example.testing.Models.CategoryAdapter;
 import com.example.testing.Models.Story;
@@ -71,39 +72,52 @@ public class HomeFragment extends Fragment {
 
     // Setting up data
     private void setUpData() {
-        ApiServices.getStoryApiEndPoint().getAllStory().enqueue(new Callback<BaseResult<List<Story>>>() {
-            @Override
-            public void onResponse(Call<BaseResult<List<Story>>> call, Response<BaseResult<List<Story>>> response) {
-                if (response.isSuccessful()) {
-                    BaseResult<List<Story>> result = response.body();
-                    if (result != null) {
-                        Log.d("API_Response", "Status Code: " + result.getStatusCode());
-                        Log.d("API_Response", "Message: " + result.getMessage());
-                        Log.d("API_Response", "Message: " + result.getData());
+        try{
 
-                        List<Story> stories = result.getData();
-                        if (stories != null) {
-                            for (Story story : stories) {
-                                Log.d("API_Response", "Story ID: " + story.getId());
-                                Log.d("API_Response", "Story Title: " + story.getName());
-                                // Đặt code xử lý dữ liệu ở đây nếu cần
+            ApiServices.getStoryApiEndPoint().getAllStory().enqueue(new Callback<BaseResult<List<Story>>>() {
+                @Override
+                public void onResponse(Call<BaseResult<List<Story>>> call, Response<BaseResult<List<Story>>> response) {
+                    if (response.isSuccessful()) {
+                        BaseResult<List<Story>> result = response.body();
+                        if (result != null) {
+                            Log.d("API_Response", "Status Code: " + result.getStatusCode());
+                            Log.d("API_Response", "Message: " + result.getMessage());
+                            Log.d("API_Response", "Message: " + result.getData());
+                            Log.d("API_Response", "Message: " + response.body());
+
+                            List<Story> stories = result.getData();
+                            if (stories != null) {
+                                for (Story story : stories) {
+                                    Log.d("API_Response", "Story ID: " + story.getId());
+                                    Log.d("API_Response", "Story Title: " + story.getName());
+                                    // Đặt code xử lý dữ liệu ở đây nếu cần
+                                }
+                            } else {
+                                Log.d("API_Response", "No data received");
                             }
                         } else {
-                            Log.d("API_Response", "No data received");
+                            Log.d("API_Response", "Response body is null");
                         }
                     } else {
-                        Log.d("API_Response", "Response body is null");
+                        Log.d("API_Response", "Response not successful: " + response.code());
                     }
-                } else {
-                    Log.d("API_Response", "Response not successful: " + response.code());
-                }
-            }
 
-            @Override
-            public void onFailure(Call<BaseResult<List<Story>>> call, Throwable t) {
-                Log.e("API_Response", "API call failed: " + t.getMessage(), t);
-            }
-        });
+                }
+
+                @Override
+                public void onFailure(Call<BaseResult<List<Story>>> call, Throwable t) {
+                    Log.e("API_Response", "API call failed: " + t.getMessage(), t);
+                }
+            });
+
+
+
+        }catch (Exception e){
+            Toast.makeText(mMainActivity, e.getMessage(), Toast.LENGTH_SHORT).show();
+
+
+        }
+
 
     }
 

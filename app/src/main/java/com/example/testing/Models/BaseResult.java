@@ -1,10 +1,10 @@
-package com.example.testing.Model;
+package com.example.testing.Models;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 public class BaseResult<T> {
 
-    @SerializedName("Data")
+    @SerializedName("data")
     @Expose
     private T Data;
 

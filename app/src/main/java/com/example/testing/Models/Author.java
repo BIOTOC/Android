@@ -14,10 +14,10 @@ public class Author {
     private String Name;
     @SerializedName("createdDate")
     @Expose
-    private LocalDateTime CreatedDate;
+    private String CreatedDate;
     @SerializedName("updatedDate")
     @Expose
-    private LocalDateTime UpdatedDate;
+    private String UpdatedDate;
     @SerializedName("isDeleted")
     @Expose
     private boolean IsDeleted;
@@ -25,7 +25,7 @@ public class Author {
     public Author() {
     }
 
-    public Author(float id, String name, LocalDateTime createdDate, LocalDateTime updatedDate, boolean isDeleted) {
+    public Author(float id, String name, String createdDate, String updatedDate, boolean isDeleted) {
         Id = id;
         Name = name;
         CreatedDate = createdDate;
@@ -49,19 +49,19 @@ public class Author {
         Name = name;
     }
 
-    public LocalDateTime getCreatedDate() {
+    public String getCreatedDate() {
         return CreatedDate;
     }
 
-    public void setCreatedDate(LocalDateTime createdDate) {
+    public void setCreatedDate(String createdDate) {
         CreatedDate = createdDate;
     }
 
-    public LocalDateTime getUpdatedDate() {
+    public String getUpdatedDate() {
         return UpdatedDate;
     }
 
-    public void setUpdatedDate(LocalDateTime updatedDate) {
+    public void setUpdatedDate(String updatedDate) {
         UpdatedDate = updatedDate;
     }
 
