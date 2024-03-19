@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,14 +18,20 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.testing.Models.BaseResult;
 import com.example.testing.Models.Book;
 import com.example.testing.Models.Chapter;
 import com.example.testing.Models.ChapterAdapter;
 import com.example.testing.Models.Story;
 import com.example.testing.R;
+import com.example.testing.Services.ApiServices;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class DetailActivity extends AppCompatActivity implements ChapterAdapter.OnChapterClickListener{
 
@@ -72,35 +79,54 @@ public class DetailActivity extends AppCompatActivity implements ChapterAdapter.
     }
 
     private void handleIntent(Intent intent) {
-        if (intent != null && intent.hasExtra("bookId")) {
-            int bookId = intent.getIntExtra("bookId", -1);
-            Book book = getBookById(bookId);
-            if (book != null) {
-                setUpBookDetails(book);
-                setUpChapterList(book);
-            }
+        if (intent != null && intent.hasExtra("Id")) {
+            int bookId = intent.getIntExtra("Id", -1);
+
+            //Book book = getBookById(bookId);
+            ApiServices.getStoryApiEndPoint().getStoryById(bookId).enqueue(new Callback<BaseResult<Story>>() {
+                @Override
+                public void onResponse(Call<BaseResult<Story>> call, Response<BaseResult<Story>> response) {
+                    if(response.isSuccessful()){
+                        BaseResult<Story> result = response.body();
+                        if(result.getStatusCode().equals("200")){
+                            Story story = result.getData();
+                            if(story != null){
+                                setUpBookDetails(story);
+                                setUpChapterList(story);
+                            }
+                        }else{
+                            Toast.makeText(DetailActivity.this, result.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<BaseResult<Story>> call, Throwable t) {
+                    Toast.makeText(DetailActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
         }
     }
 
-    private void setUpBookDetails(Book book) {
-        String base64Image = book.getImageBase64();
+    private void setUpBookDetails(Story story) {
+        String base64Image = story.getImage();
         byte[] decodedString = Base64.decode(base64Image, Base64.DEFAULT);
         Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
         imageViewBook.setImageBitmap(decodedByte);
-        textViewTitle.setText(book.getTitle());
+        textViewTitle.setText(story.getName());
     }
 
-    private void setUpChapterList(Book book) {
+    private void setUpChapterList(Story story) {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        List<Chapter> chapters = getChapterList(book);
+        List<Chapter> chapters = getChapterList(story);
         ChapterAdapter adapter = new ChapterAdapter(chapters, this);
         recyclerView.setAdapter(adapter);
     }
 
-    private List<Chapter> getChapterList(Book book) {
+    private List<Chapter> getChapterList(Story story) {
         List<Chapter> chapters = new ArrayList<>();
-        if (book != null) {
-            int numberOfChapters = book.getNumberOfChapters();
+        if (story != null) {
+            int numberOfChapters = story.getNumberChapter();
             for (int i = 1; i <= numberOfChapters; i++) {
                 Chapter chapter = new Chapter(i, "Chapter " + i);
                 chapters.add(chapter);
