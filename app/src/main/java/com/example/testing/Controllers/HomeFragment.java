@@ -97,9 +97,9 @@ public class HomeFragment extends Fragment {
 
                             List<Category> list = new ArrayList<>();
                             list.add(new Category("Category 1", stories));
-                            list.add(new Category("Category 2", stories));
-                            list.add(new Category("Category 3", stories));
-                            list.add(new Category("Category 4", stories));
+//                            list.add(new Category("Category 2", stories));
+//                            list.add(new Category("Category 3", stories));
+//                            list.add(new Category("Category 4", stories));
                             categoryAdapter.setData(list);
 //                            if (stories != null) {
 //                                for (Story story : stories) {

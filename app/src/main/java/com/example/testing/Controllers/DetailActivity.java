@@ -82,8 +82,8 @@ public class DetailActivity extends AppCompatActivity implements ChapterAdapter.
         if (intent != null && intent.hasExtra("Id")) {
             int bookId = intent.getIntExtra("Id", -1);
 
-            //Book book = getBookById(bookId);
             ApiServices.getStoryApiEndPoint().getStoryById(bookId).enqueue(new Callback<BaseResult<Story>>() {
+
                 @Override
                 public void onResponse(Call<BaseResult<Story>> call, Response<BaseResult<Story>> response) {
                     if(response.isSuccessful()){
@@ -93,6 +93,8 @@ public class DetailActivity extends AppCompatActivity implements ChapterAdapter.
                             if(story != null){
                                 setUpBookDetails(story);
                                 setUpChapterList(story);
+                                String.valueOf(intent.putExtra("name", story.getName()));
+
                             }
                         }else{
                             Toast.makeText(DetailActivity.this, result.getMessage(), Toast.LENGTH_SHORT).show();
@@ -138,8 +140,13 @@ public class DetailActivity extends AppCompatActivity implements ChapterAdapter.
 
     @Override
     public void onChapterClick(Chapter chapter) {
+        Intent oldintent = getIntent();
+        String name = oldintent.getStringExtra("name");
         Intent intent = new Intent(this, ChapterDetailActivity.class);
         intent.putExtra("chapterId", chapter.getChapterId());
+        String.valueOf(intent.putExtra("name", name));
+
+
         startActivity(intent);
     }
 

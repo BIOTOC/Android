@@ -3,8 +3,8 @@ package com.example.testing.Controllers;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.LinearLayout;
+import android.widget.Button;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
@@ -12,21 +12,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-import androidx.core.widget.NestedScrollView;
 
 import com.example.testing.Models.Chapter;
 import com.example.testing.R;
 
-import java.util.List;
-
 public class ChapterDetailActivity extends AppCompatActivity {
 
-    private EditText commentEditText;
-    private DatabaseHelper databaseHelper;
     private int chapterId;
-    private LinearLayout commentLayout;
-    private TextView commentTextView;
-
+    private ScrollView scrollView;
+    private Button viewCommentsButton;
+    private TextView chapterIdTextView;
+    private TextView chapterDetailTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,69 +35,57 @@ public class ChapterDetailActivity extends AppCompatActivity {
             return insets;
         });
 
+        bindingView();
+        bindingAction();
+
         Intent intent = getIntent();
         if (intent != null && intent.hasExtra("chapterId")) {
             chapterId = intent.getIntExtra("chapterId", -1);
+            String name = intent.getStringExtra("name");
 
-            TextView chapterIdTextView = findViewById(R.id.chapter_id_text_view);
-            TextView chapterDetailTextView = findViewById(R.id.chapter_detail_text_view);
-            databaseHelper = new DatabaseHelper(this);
-            commentEditText = findViewById(R.id.comment_edit_text);
-            commentTextView = findViewById(R.id.commentTextView);
-
-            commentLayout = findViewById(R.id.comment_layout);
-            findViewById(R.id.submit_button).setOnClickListener(view -> {
-                String comment = commentEditText.getText().toString().trim();
-                if (!comment.isEmpty()) {
-                    databaseHelper.addComment(chapterId, comment);
-                    commentEditText.getText().clear();
-                    displayComments();
-                }
-            });
-
-            commentLayout.setVisibility(View.GONE);
-            commentTextView.setVisibility(View.GONE);
-            databaseHelper.deleteComment(6);
-
-            displayComments();
-
-            chapterIdTextView.setText("Chapter " + chapterId);
+            chapterIdTextView.setText(name + " - Chapter " + chapterId);
 
             Chapter chapter = getChapterDetail(chapterId);
             if (chapter != null) {
-                chapterDetailTextView.setText(getChapterDetail(chapterId).getChapterDetail());
+                chapterDetailTextView.setText(chapter.getChapterDetail());
             }
         }
+    }
 
-        NestedScrollView nestedScrollView = findViewById(R.id.nestedScrollView);
-        nestedScrollView.getViewTreeObserver().addOnScrollChangedListener(() -> {
-            if (isAtBottom(nestedScrollView)) {
-                commentLayout.setVisibility(View.VISIBLE);
-                commentTextView.setVisibility(View.VISIBLE);
+    private void bindingView() {
+        chapterIdTextView = findViewById(R.id.chapter_id_text_view);
+        chapterDetailTextView = findViewById(R.id.chapter_detail_text_view);
+        scrollView = findViewById(R.id.scrollView);
+        viewCommentsButton = findViewById(R.id.view_comments_button);
+        viewCommentsButton.setVisibility(View.GONE);
+
+        scrollView.getViewTreeObserver().addOnScrollChangedListener(() -> {
+            if (isScrollViewAtBottom(scrollView)) {
+                viewCommentsButton.setVisibility(View.VISIBLE);
             } else {
-                // Nếu chưa cuộn đến cuối, ẩn đi phần hiển thị comment và phần layout comment
-                commentLayout.setVisibility(View.GONE);
-                commentTextView.setVisibility(View.GONE);
+                viewCommentsButton.setVisibility(View.GONE);
             }
         });
     }
 
-    // Phương thức kiểm tra xem đã cuộn đến cuối nội dung truyện chưa
-    private boolean isAtBottom(NestedScrollView nestedScrollView) {
-        if (nestedScrollView.getChildAt(0) != null) {
-            return (nestedScrollView.getHeight() + nestedScrollView.getScrollY() >= nestedScrollView.getChildAt(0).getHeight());
-        }
-        return false;
+    private void bindingAction() {
+        viewCommentsButton.setOnClickListener(v -> {
+            Intent oldintent = getIntent();
+            String name = oldintent.getStringExtra("name");
+            Intent intent = new Intent(ChapterDetailActivity.this, CommentActivity.class);
+            intent.putExtra("chapterId", chapterId);
+            String.valueOf(intent.putExtra("name", name));
+
+            startActivity(intent);
+        });
+
     }
 
-
-    private void displayComments() {
-        List<String> comments = databaseHelper.getCommentsForChapter(chapterId);
-        StringBuilder commentStringBuilder = new StringBuilder();
-        for (String comment : comments) {
-            commentStringBuilder.append(comment).append("\n");
+    private boolean isScrollViewAtBottom(ScrollView scrollView) {
+        if (scrollView.getChildAt(0) != null) {
+            return (scrollView.getHeight() + scrollView.getScrollY()) >= (scrollView.getChildAt(0).getHeight());
         }
-        commentTextView.setText(commentStringBuilder.toString());
+        return false;
     }
 
     private Chapter getChapterDetail(int chapterId) {
