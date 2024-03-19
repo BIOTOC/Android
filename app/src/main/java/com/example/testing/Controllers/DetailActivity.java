@@ -18,14 +18,20 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.testing.Models.BaseResult;
 import com.example.testing.Models.Book;
 import com.example.testing.Models.Chapter;
 import com.example.testing.Models.ChapterAdapter;
 import com.example.testing.Models.Story;
 import com.example.testing.R;
+import com.example.testing.Services.ApiServices;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class DetailActivity extends AppCompatActivity implements ChapterAdapter.OnChapterClickListener{
 
@@ -83,6 +89,7 @@ public class DetailActivity extends AppCompatActivity implements ChapterAdapter.
 
     private void handleIntent(Intent intent) {
         if (intent != null && intent.hasExtra("Id")) {
+<<<<<<< HEAD
             int storyId = intent.getIntExtra("Id", -1);
 //            Story story = getBookById(storyId);
             Story story = new Story();
@@ -90,6 +97,33 @@ public class DetailActivity extends AppCompatActivity implements ChapterAdapter.
                 setUpBookDetails(story);
                 setUpChapterList(story);
             }
+=======
+            int bookId = intent.getIntExtra("Id", -1);
+
+            //Book book = getBookById(bookId);
+            ApiServices.getStoryApiEndPoint().getStoryById(bookId).enqueue(new Callback<BaseResult<Story>>() {
+                @Override
+                public void onResponse(Call<BaseResult<Story>> call, Response<BaseResult<Story>> response) {
+                    if(response.isSuccessful()){
+                        BaseResult<Story> result = response.body();
+                        if(result.getStatusCode().equals("200")){
+                            Story story = result.getData();
+                            if(story != null){
+                                setUpBookDetails(story);
+                                setUpChapterList(story);
+                            }
+                        }else{
+                            Toast.makeText(DetailActivity.this, result.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<BaseResult<Story>> call, Throwable t) {
+                    Toast.makeText(DetailActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
+>>>>>>> 7a554aec5ebb831cd989643d50790eceae65b41c
         }
     }
 
