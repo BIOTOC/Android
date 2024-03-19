@@ -27,7 +27,6 @@ public class SettingFragment extends Fragment {
 
     private Button switchModeButton;
 
-    private Button profilesetting;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -57,7 +56,6 @@ public class SettingFragment extends Fragment {
 
     private void bindingView(){
         switchModeButton = mView.findViewById(R.id.switch_mode_button);
-        profilesetting = mView.findViewById(R.id.setting_profile);
     }
 
     private void bindingAction(){
@@ -68,12 +66,6 @@ public class SettingFragment extends Fragment {
             }
         });
 
-        profilesetting.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getActivity(), SettingProfileActivity.class));
-            }
-        });
     }
 
     @Override
