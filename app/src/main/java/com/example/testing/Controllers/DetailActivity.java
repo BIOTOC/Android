@@ -140,7 +140,6 @@ public class DetailActivity extends AppCompatActivity implements ChapterAdapter.
                 }
             }
         } else {
-            // Xử lý trường hợp không tìm thấy book
             Toast.makeText(this, "Book not found!", Toast.LENGTH_SHORT).show();
         }
     }

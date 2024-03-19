@@ -9,4 +9,7 @@
     <item android:id="@+id/mWishList"
         android:title="WishList"
         android:icon="@drawable/ic_wishlist"/>
+    <item android:id="@+id/mProfile"
+        android:title="Setting"
+        android:icon="@drawable/ic_setting"/>
 </menu>

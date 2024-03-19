@@ -47,7 +47,10 @@ public class MainActivity extends AppCompatActivity {
 //                wishListFragment.setArguments(bundle);
 //
 //                replaceFragment(wishListFragment);
+            } else if(item.getItemId() == R.id.mProfile) {
+                replaceFragment(new SettingFragment());
             }
+
             return true;
         });
     }
