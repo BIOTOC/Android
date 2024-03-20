@@ -56,7 +56,7 @@ public class ChapterAdapter extends RecyclerView.Adapter<ChapterAdapter.ChapterV
         }
 
         public void bind(Chapter chapter) {
-            chapterTextView.setText(chapter.getChapterDetail());
+            chapterTextView.setText(chapter.getTitle());
         }
 
         @Override

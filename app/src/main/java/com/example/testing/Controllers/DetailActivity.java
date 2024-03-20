@@ -126,23 +126,23 @@ public class DetailActivity extends AppCompatActivity implements ChapterAdapter.
 
     private void setUpChapterList(Story story) {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        List<Chapter> chapters = getChapterList(story);
+        List<Chapter> chapters = story.getChapters();
         ChapterAdapter adapter = new ChapterAdapter(chapters, this);
         recyclerView.setAdapter(adapter);
     }
 
 
-    private List<Chapter> getChapterList(Story story) {
-        List<Chapter> chapters = new ArrayList<>();
-        if (story != null) {
-            int numberOfChapters = story.getNumberChapter();
-            for (int i = 1; i <= numberOfChapters; i++) {
-                Chapter chapter = new Chapter(i, "Chapter " + i);
-                chapters.add(chapter);
-            }
-        }
-        return chapters;
-    }
+//    private List<Chapter> getChapterList(Story story) {
+//        List<Chapter> chapters = new ArrayList<>();
+//        if (story != null) {
+//            int numberOfChapters = story.getNumberChapter();
+//            for (int i = 1; i <= numberOfChapters; i++) {
+//                Chapter chapter = new Chapter(i, "Chapter " + i);
+//                chapters.add(chapter);
+//            }
+//        }
+//        return chapters;
+//    }
 
     @Override
     public void onChapterClick(Chapter chapter) {
