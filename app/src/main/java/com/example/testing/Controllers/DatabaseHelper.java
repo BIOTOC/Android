@@ -122,9 +122,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
-
-
-
     // Thêm comment cho một chapter
     public void addComment(int chapterId, String username, String content) {
         SQLiteDatabase db = this.getWritableDatabase();

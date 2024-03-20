@@ -32,6 +32,8 @@ public class HomeFragment extends Fragment {
     private View mView;
     private MainActivity mMainActivity;
 
+
+
     public HomeFragment() {
 
     }
@@ -92,24 +94,18 @@ public class HomeFragment extends Fragment {
                         Log.d("API_Response", "Response not successful: " + response.code());
                     }
                 }
-
                 @Override
                 public void onFailure(Call<BaseResult<List<Category>>> call, Throwable t) {
                     Toast.makeText(mMainActivity, t.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             });
 
-
-
         }catch (Exception e){
             Toast.makeText(mMainActivity, e.getMessage(), Toast.LENGTH_SHORT).show();
             Log.e("Exception",e.getMessage());
 
         }
-
-
     }
-
 
     // Handling book item click
     private void onBookItemClick(Story story) {
