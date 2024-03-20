@@ -58,13 +58,13 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
             return;
         }
 
-        holder.tvNameCategory.setText(category.getNameCategory());
+        holder.tvNameCategory.setText(category.getName());
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext, RecyclerView.HORIZONTAL, false);
         holder.rcvBook.setLayoutManager(linearLayoutManager);
 
         BookAdapter bookAdapter = new BookAdapter();
-        bookAdapter.setData(category.getBooks());
+        bookAdapter.setData(category.getStories());
 
         bookAdapter.setOnBookClickListener(new BookAdapter.OnBookClickListener() {
             @Override

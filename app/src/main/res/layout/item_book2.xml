@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="300dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginEnd="10dp"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardCornerRadius="8dp">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal">
+        android:layout_height="match_parent">
 
         <ImageView
             android:id="@+id/img_book"
-            android:layout_width="68dp"
-            android:layout_height="220dp"
-            android:layout_weight="1"
+            android:layout_width="145dp"
+            android:layout_height="217dp"
+            android:layout_alignParentStart="true"
             android:scaleType="centerCrop"
             android:src="@drawable/book1" />
 
         <LinearLayout
-            android:layout_width="0dp"
+            android:id="@+id/layout_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="2"
+            android:layout_toEndOf="@id/img_book"
             android:orientation="vertical">
 
             <TextView
@@ -42,14 +42,18 @@
                 android:text="Number of Chapters: "
                 android:textSize="12sp" />
 
-            <TextView
-                android:id="@+id/tv_author"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="6dp"
-                android:text="Author: "
-                android:textSize="12sp" />
-
         </LinearLayout>
-    </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_remove"
+            android:layout_width="74dp"
+            android:layout_height="77dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="8dp"
+            android:contentDescription="Remove"
+            android:drawableEnd="@drawable/ic_remove"
+            android:backgroundTint="@color/red"
+            android:text="" />
+    </RelativeLayout>
 </androidx.cardview.widget.CardView>

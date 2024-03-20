@@ -1,11 +1,14 @@
 package com.example.testing.Models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class Story {
+public class Story  implements Parcelable {
 
     @SerializedName("id")
     @Expose
@@ -36,7 +39,16 @@ public class Story {
     @SerializedName("author")
     private Author Author;
 
+
     public Story() {
+    }
+
+
+    public Story(Integer id, String name, String image, Integer numberChapter) {
+        Id = id;
+        Name = name;
+        Image = image;
+        NumberChapter = numberChapter;
     }
 
     public Story(Integer id, String name, String image, String description, Integer status, Integer numberChapter, List<Chapter> chapters, com.example.testing.Models.Author author) {
@@ -126,5 +138,44 @@ public class Story {
                 ", Chapters=" + Chapters +
                 ", Author=" + Author +
                 '}';
+    }
+
+    protected Story(Parcel in) {
+        Id = in.readInt();
+        Name = in.readString();
+        Image =in.readString();
+        Description = in.readString();
+        Status = in.readInt();
+        NumberChapter = in.readInt();
+
+        // Đọc các thuộc tính khác từ Parcel
+    }
+
+    public static final Creator<Story> CREATOR = new Creator<Story>() {
+        @Override
+        public Story createFromParcel(Parcel in) {
+            return new Story(in);
+        }
+
+        @Override
+        public Story[] newArray(int size) {
+            return new Story[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(Id);
+        dest.writeString(Name);
+        dest.writeString(Image);
+        dest.writeString(Description);
+        dest.writeInt(Status);
+        dest.writeInt(NumberChapter);
+        // Ghi các thuộc tính khác vào Parcel
     }
 }

@@ -3,10 +3,10 @@ package com.example.testing.Models;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Base64;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -17,15 +17,25 @@ import com.example.testing.R;
 
 import java.util.List;
 
-public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder>{
+public class BookAdapter2 extends RecyclerView.Adapter<BookAdapter2.BookViewHolder>{
 
     private List<Story> mStories;
 
-    public BookAdapter() {
+    public BookAdapter2() {
     }
 
-    public BookAdapter(List<Story> mStories) {
+    public BookAdapter2(List<Story> mStories) {
         this.mStories = mStories;
+    }
+
+    public interface OnRemoveClickListener {
+        void onRemoveClick(int position);
+    }
+
+    private OnRemoveClickListener onRemoveClickListener;
+
+    public void setOnRemoveClickListener(OnRemoveClickListener listener) {
+        this.onRemoveClickListener = listener;
     }
 
     public void updateData(List<Story> wishlistStories) {
@@ -44,6 +54,7 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
     }
 
 
+
     public void setData(List<Story> list){
         this.mStories = list;
         notifyDataSetChanged();
@@ -52,7 +63,7 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
     @NonNull
     @Override
     public BookViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_book, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_book2, parent, false);
         return new BookViewHolder(view);
     }
 
@@ -77,17 +88,8 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
 
         holder.imgBook.setImageBitmap(decodedByte);
         holder.tvTitle.setText(story.getName());
+        holder.tvChapter.setText("Number of Chapter:" + story.getNumberChapter());
 
-        Author author = story.getAuthor();
-        if (author != null) {
-            holder.tvAuthor.setText("Author: " + story.getAuthor().getName());
-
-        } else {
-            holder.tvAuthor.setText("Author: ");
-            Log.e("BookAdapter", "Author object is null");
-        }
-
-        holder.tvChapter.setText("Number of Chapter: " + story.getNumberChapter());
     }
 
     @Override
@@ -102,7 +104,7 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
         private ImageView imgBook;
         private TextView tvTitle;
         private TextView tvChapter;
-        private TextView tvAuthor;
+        private Button btnRemove;
 
         public BookViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -110,7 +112,18 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
             imgBook = itemView.findViewById(R.id.img_book);
             tvTitle = itemView.findViewById(R.id.tv_title);
             tvChapter = itemView.findViewById(R.id.tv_chapter);
-            tvAuthor = itemView.findViewById(R.id.tv_author);
+            btnRemove = itemView.findViewById(R.id.btn_remove);
+
+            btnRemove.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION && onRemoveClickListener != null) {
+                        onRemoveClickListener.onRemoveClick(position);
+                    }
+                }
+            });
+
         }
     }
 }

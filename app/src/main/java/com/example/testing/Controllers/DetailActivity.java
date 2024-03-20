@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Base64;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -69,11 +70,16 @@ public class DetailActivity extends AppCompatActivity implements ChapterAdapter.
             @Override
             public void onClick(View v) {
                 Story story = getIntent().getParcelableExtra("story");
+//                int bookId = getIntent().getIntExtra("Id", -1);
 
-//                WishListFragment wishListFragment = (WishListFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_wishlist);
-//                if (wishListFragment != null) {
-//                    wishListFragment.addToWishlist(story);
-//                }
+
+                if (story != null) {
+                    Log.e("DetailFragment", "Story value: " + story);
+                    // Lưu thông tin của câu chuyện vào SQLite
+                    DatabaseHelper databaseHelper = new DatabaseHelper(DetailActivity.this);
+                    databaseHelper.addToWishlist(story);
+                    Toast.makeText(DetailActivity.this, "Added to Wishlist", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }

@@ -3,6 +3,7 @@ package com.example.testing.Controllers;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,6 +29,8 @@ public class CommentActivity extends AppCompatActivity {
     private CommentAdapter commentAdapter;
     private DatabaseHelper databaseHelper;
 
+    private TextView storyName;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,14 +44,17 @@ public class CommentActivity extends AppCompatActivity {
 
         databaseHelper = new DatabaseHelper(this);
 
-        // Lấy chapterId từ intent
         chapterId = getIntent().getIntExtra("chapterId", -1);
+        String name = getIntent().getStringExtra("name");
 
-        // Ánh xạ view
+
         recyclerView = findViewById(R.id.recycler_view_comments);
         usernameEditText = findViewById(R.id.edit_text_username);
         contentEditText = findViewById(R.id.edit_text_comment);
         addButton = findViewById(R.id.button_submit);
+        storyName = findViewById(R.id.story_id_text_view);
+
+        storyName.setText(name + " - Chapter " + chapterId);
 
         // Tạo một Adapter mới
         commentAdapter = new CommentAdapter(new ArrayList<>());

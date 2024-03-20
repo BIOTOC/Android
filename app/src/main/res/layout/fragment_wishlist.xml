@@ -4,7 +4,7 @@
     android:id="@+id/fragment_wishlist"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Controller.WishListFragment">
+    tools:context=".Controllers.WishListFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_wishlist"

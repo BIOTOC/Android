@@ -78,7 +78,6 @@ public class SearchFragment extends Fragment {
         rcvBookSearch.setLayoutManager(linearLayoutManager);
         rcvBookSearch.setVisibility(View.GONE);
 
-        // Thực hiện gọi API để lấy danh sách câu chuyện
         if (ApiServices.getStoryApiEndPoint() != null) {
             ApiServices.getStoryApiEndPoint().getAllStory().enqueue(new Callback<BaseResult<List<Story>>>() {
                 @Override
