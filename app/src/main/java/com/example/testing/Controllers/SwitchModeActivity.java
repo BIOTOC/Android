@@ -26,7 +26,13 @@ public class SwitchModeActivity extends AppCompatActivity {
 
     private void bindingAction(){
         int currentNightMode = AppCompatDelegate.getDefaultNightMode();
-        switchMaterial.setChecked(currentNightMode == AppCompatDelegate.MODE_NIGHT_NO ? false : true);
+        if (currentNightMode == AppCompatDelegate.MODE_NIGHT_YES) {
+            textView.setText("DarkMode");
+            switchMaterial.setChecked(true);
+        } else {
+            textView.setText("LightMode");
+            switchMaterial.setChecked(false);
+        }
 
         switchMaterial.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override

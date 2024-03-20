@@ -70,12 +70,9 @@ public class DetailActivity extends AppCompatActivity implements ChapterAdapter.
             @Override
             public void onClick(View v) {
                 Story story = getIntent().getParcelableExtra("story");
-//                int bookId = getIntent().getIntExtra("Id", -1);
-
 
                 if (story != null) {
                     Log.e("DetailFragment", "Story value: " + story);
-                    // Lưu thông tin của câu chuyện vào SQLite
                     DatabaseHelper databaseHelper = new DatabaseHelper(DetailActivity.this);
                     databaseHelper.addToWishlist(story);
                     Toast.makeText(DetailActivity.this, "Added to Wishlist", Toast.LENGTH_SHORT).show();
@@ -126,23 +123,11 @@ public class DetailActivity extends AppCompatActivity implements ChapterAdapter.
 
     private void setUpChapterList(Story story) {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        List<Chapter> chapters = getChapterList(story);
+        List<Chapter> chapters = story.getChapters();
         ChapterAdapter adapter = new ChapterAdapter(chapters, this);
         recyclerView.setAdapter(adapter);
     }
 
-
-    private List<Chapter> getChapterList(Story story) {
-        List<Chapter> chapters = new ArrayList<>();
-        if (story != null) {
-            int numberOfChapters = story.getNumberChapter();
-            for (int i = 1; i <= numberOfChapters; i++) {
-                Chapter chapter = new Chapter(i, "Chapter " + i);
-                chapters.add(chapter);
-            }
-        }
-        return chapters;
-    }
 
     @Override
     public void onChapterClick(Chapter chapter) {
@@ -151,6 +136,7 @@ public class DetailActivity extends AppCompatActivity implements ChapterAdapter.
         Intent intent = new Intent(this, ChapterDetailActivity.class);
         intent.putExtra("chapterId", chapter.getChapterId());
         String.valueOf(intent.putExtra("name", name));
+
 
 
         startActivity(intent);

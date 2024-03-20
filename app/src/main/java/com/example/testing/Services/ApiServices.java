@@ -1,6 +1,7 @@
 package com.example.testing.Services;
 
 import com.example.testing.Services.Category.CategoryApiEndPoint;
+import com.example.testing.Services.Chapter.ChapterApiEndPoint;
 import com.example.testing.Services.Story.StoryApiEndPoint;
 
 import retrofit2.Retrofit;
@@ -15,6 +16,8 @@ public class ApiServices {
 
     public CategoryApiEndPoint categoryApiEndPoint;
 
+    public ChapterApiEndPoint chapterApiEndPoint;
+
     private ApiServices() {
         Retrofit retrofit = new Retrofit.Builder().baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create()).build();
@@ -22,6 +25,8 @@ public class ApiServices {
         storyApiEndPoint = retrofit.create(StoryApiEndPoint.class);
 
         categoryApiEndPoint = retrofit.create(CategoryApiEndPoint.class);
+
+        chapterApiEndPoint = retrofit.create(ChapterApiEndPoint.class);
 
     }
 
@@ -38,5 +43,9 @@ public class ApiServices {
 
     public  static CategoryApiEndPoint getCategoryApiEndPoint()  {
         return getInstance().categoryApiEndPoint;
+    }
+
+    public static ChapterApiEndPoint getChapterApiEndPoint() {
+        return getInstance().chapterApiEndPoint;
     }
 }

@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -42,10 +43,12 @@ public class CommentActivity extends AppCompatActivity {
             return insets;
         });
 
+
         databaseHelper = new DatabaseHelper(this);
 
         chapterId = getIntent().getIntExtra("chapterId", -1);
         String name = getIntent().getStringExtra("name");
+        String title = getIntent().getStringExtra("title");
 
 
         recyclerView = findViewById(R.id.recycler_view_comments);
@@ -54,21 +57,16 @@ public class CommentActivity extends AppCompatActivity {
         addButton = findViewById(R.id.button_submit);
         storyName = findViewById(R.id.story_id_text_view);
 
-        storyName.setText(name + " - Chapter " + chapterId);
+        storyName.setText(name + " - " + title);
 
-        // Tạo một Adapter mới
         commentAdapter = new CommentAdapter(new ArrayList<>());
 
-        // Đặt Adapter cho RecyclerView
         recyclerView.setAdapter(commentAdapter);
 
-        // Đặt LayoutManager cho RecyclerView
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        // Load comments
         loadComments();
 
-        // Xử lý sự kiện thêm comment
         addButton.setOnClickListener(v -> addComment());
     }
 
@@ -83,11 +81,32 @@ public class CommentActivity extends AppCompatActivity {
         String username = usernameEditText.getText().toString();
         String content = contentEditText.getText().toString();
 
-        databaseHelper.addComment(chapterId, username, content);
-
-        loadComments();
-
-        usernameEditText.setText("");
-        contentEditText.setText("");
+        if (validateInput(username, content)) {
+            databaseHelper.addComment(chapterId, username, content);
+            loadComments();
+            usernameEditText.setText("");
+            contentEditText.setText("");
+        }
     }
+
+    private boolean validateInput(String username, String content) {
+        int maxUsernameLength = 10;
+        int maxContentLength = 20;
+
+        if (username.length() > maxUsernameLength) {
+            usernameEditText.setError("Username cannot exceed 10 characters");
+            Toast.makeText(CommentActivity.this, "Username cannot exceed 10 characters", Toast.LENGTH_SHORT).show();
+
+            return false;
+        }
+
+        if (content.length() > maxContentLength) {
+            contentEditText.setError("Content cannot exceed 20 characters");
+            Toast.makeText(CommentActivity.this, "Content cannot exceed 20 characters", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        return true;
+    }
+
 }
