@@ -96,6 +96,7 @@ public class HomeFragment extends Fragment {
                 @Override
                 public void onFailure(Call<BaseResult<List<Category>>> call, Throwable t) {
                     Toast.makeText(mMainActivity, t.getMessage(), Toast.LENGTH_SHORT).show();
+                    Log.d("API_Response", "Response not successful: " + t.getMessage());
                 }
             });
 

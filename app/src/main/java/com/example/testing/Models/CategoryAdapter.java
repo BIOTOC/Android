@@ -1,6 +1,7 @@
 package com.example.testing.Models;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,6 +60,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
         }
 
         holder.tvNameCategory.setText(category.getName());
+        holder.tvNameCategory.setTextColor(Color.parseColor("#BA1B1B"));
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext, RecyclerView.HORIZONTAL, false);
         holder.rcvBook.setLayoutManager(linearLayoutManager);

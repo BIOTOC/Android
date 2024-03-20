@@ -9,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SearchView;
@@ -17,11 +18,12 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.testing.Models.BaseResult;
 import com.example.testing.Models.BookAdapter;
+import com.example.testing.Models.PaginationResult;
 import com.example.testing.Models.Story;
 import com.example.testing.R;
 import com.example.testing.Services.ApiServices;
+import com.example.testing.Services.Story.Request.FilterStoryRequest;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +34,10 @@ import retrofit2.Response;
 
 
 public class SearchFragment extends Fragment {
-
+    private List<Story> storyList = new ArrayList<Story>();
+    private Integer page = 1;
+    private Integer pageSize = 3;
+    private Integer totalPages;
     private RecyclerView rcvBookSearch;
     private BookAdapter bookAdapter;
     private View mView;
@@ -79,13 +84,6 @@ public class SearchFragment extends Fragment {
         rcvBookSearch.setVisibility(View.GONE);
 
         if (ApiServices.getStoryApiEndPoint() != null) {
-            ApiServices.getStoryApiEndPoint().getAllStory().enqueue(new Callback<BaseResult<List<Story>>>() {
-                @Override
-                public void onResponse(Call<BaseResult<List<Story>>> call, Response<BaseResult<List<Story>>> response) {
-                    if (response.isSuccessful()) {
-                        BaseResult<List<Story>> result = response.body();
-                        List<Story> storyList = result.getData();
-
                         // Khởi tạo adapter với danh sách câu chuyện từ API
                         bookAdapter = new BookAdapter(storyList);
                         rcvBookSearch.setAdapter(bookAdapter);
@@ -99,16 +97,6 @@ public class SearchFragment extends Fragment {
                                 onBookItemClick(story);
                             }
                         });
-                    } else {
-                        Log.d("API_Response", "Response not successful: " + response.code());
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<BaseResult<List<Story>>> call, Throwable t) {
-                    Log.e("API_Response", "API call failed: " + t.getMessage(), t);
-                }
-            });
         } else {
             Log.e("API_Response", "StoryApiEndPoint is null");
         }
@@ -139,35 +127,36 @@ public class SearchFragment extends Fragment {
     private void handleQueryTextChange(String newText) {
         if (bookAdapter != null) {
             if (ApiServices.getStoryApiEndPoint() != null) {
-                ApiServices.getStoryApiEndPoint().getAllStory().enqueue(new Callback<BaseResult<List<Story>>>() {
+//
+                page = 1;
+                FilterStoryRequest request = new FilterStoryRequest(page,pageSize,newText);
+                ApiServices.getStoryApiEndPoint().filterStoryByName(request).enqueue(new Callback<PaginationResult<List<Story>>>() {
                     @Override
-                    public void onResponse(Call<BaseResult<List<Story>>> call, Response<BaseResult<List<Story>>> response) {
+                    public void onResponse(Call<PaginationResult<List<Story>>> call, Response<PaginationResult<List<Story>>> response) {
                         if (response.isSuccessful()) {
-                            BaseResult<List<Story>> result = response.body();
-                            List<Story> list = result.getData();
+                            if(response.body().getStatusCode().equals("200")){
+                                storyList = response.body().getData();
+                                bookAdapter.setData(storyList);
 
-                            List<Story> filteredList = new ArrayList<>();
-                            for (Story story : list) {
-                                if (story.getName().toLowerCase().contains(newText.toLowerCase())) {
-                                    filteredList.add(story);
+                                totalPages = response.body().getTotalPages();
+                                page+=1;
+                                if (newText.isEmpty() || storyList.isEmpty()) {
+                                    rcvBookSearch.setVisibility(View.GONE);
+                                } else {
+                                    rcvBookSearch.setVisibility(View.VISIBLE);
                                 }
+                            }else{
+                                Toast.makeText(mView.getContext(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
                             }
 
-                            bookAdapter.setData(filteredList);
-
-                            if (newText.isEmpty() || filteredList.isEmpty()) {
-                                rcvBookSearch.setVisibility(View.GONE);
-                            } else {
-                                rcvBookSearch.setVisibility(View.VISIBLE);
-                            }
                         } else {
                             Log.d("API_Response", "Response not successful: " + response.code());
                         }
                     }
 
                     @Override
-                    public void onFailure(Call<BaseResult<List<Story>>> call, Throwable t) {
-                        Log.e("API_Response", "API call failed: " + t.getMessage(), t);
+                    public void onFailure(Call<PaginationResult<List<Story>>> call, Throwable t) {
+
                     }
                 });
             } else {
