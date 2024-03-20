@@ -25,7 +25,9 @@ public class SwitchModeActivity extends AppCompatActivity {
     }
 
     private void bindingAction(){
-        switchMaterial.setChecked(false);
+        int currentNightMode = AppCompatDelegate.getDefaultNightMode();
+        switchMaterial.setChecked(currentNightMode == AppCompatDelegate.MODE_NIGHT_NO ? false : true);
+
         switchMaterial.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {

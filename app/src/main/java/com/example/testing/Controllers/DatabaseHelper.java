@@ -33,7 +33,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String COLUMN_USERNAME = "username";
 
     public DatabaseHelper(Context context) {
-        super(context, "YourDatabaseName.db", null, 2);
+        super(context, "YourDatabaseName.db", null, 3);
     }
 
     @Override
@@ -51,7 +51,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String createCommentsTableQuery = "CREATE TABLE " + TABLE_COMMENTS + " ("
                 + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + COLUMN_CHAPTER_ID + " INTEGER, "
-                + COLUMN_USERNAME + " TEXT)";
+                + COLUMN_USERNAME + " TEXT,"
+                + COLUMN_CONTENT + " TEXT)";
         db.execSQL(createCommentsTableQuery);
     }
 
@@ -175,10 +176,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        if (oldVersion < 2) {
+        if (oldVersion < 3) {
             // Thêm cột mới hoặc thực hiện các thay đổi khác
-            db.execSQL("ALTER TABLE " + TABLE_WISHLIST + " ADD COLUMN " + COLUMN_IMAGE + " TEXT");
-            db.execSQL("ALTER TABLE " + TABLE_WISHLIST + " ADD COLUMN " + COLUMN_CHAPTER + " INTEGER");
+//            db.execSQL("ALTER TABLE " + TABLE_WISHLIST + " ADD COLUMN " + COLUMN_IMAGE + " TEXT");
+//            db.execSQL("ALTER TABLE " + TABLE_WISHLIST + " ADD COLUMN " + COLUMN_CHAPTER + " INTEGER");
 
-        }    }
+            db.execSQL("ALTER TABLE " + TABLE_COMMENTS + " ADD COLUMN " + COLUMN_CONTENT + " TEXT");
+
+        }
+    }
 }
